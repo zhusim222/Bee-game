@@ -8,7 +8,7 @@
 
 bitmap background = bitmap_named("images/Background.jpg");
 bitmap bee = bitmap_named("images/Bee.png");
-bitmap box = bitmap_named("images/box.jpeg");
+bitmap box = bitmap_named("images/box.png");
 float player_posx = 480.0f;
 float player_posy = 550.0f;
 
@@ -18,7 +18,7 @@ int main()
     open_window("BeeFall", 1280, 960); //named window beefall and window size
     hide_mouse(); // hide mouse while cursor is over game window
     Player player(480.0f, 550.0f, 10.0f); // initialize player
-    Obstacle boxObstacle(640, 0, 50, 50, 0, 2); // x, y, width, height, type, speed
+    Obstacle boxObstacle(640, 0, 100, 100, 0, 2); // x, y, width, height, type, speed
     
     
 
