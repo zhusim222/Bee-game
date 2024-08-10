@@ -20,7 +20,7 @@ int main()
     Player player(480.0f, 550.0f, 10.0f); // initialize player
     Obstacle boxObstacle(640, 0, 100, 100, 0, 2); // x, y, width, height, type, speed
     
-    
+    std::vector<Obstacle> obstacles; // list of obstacle
 
     while (!quit_requested())
     {
@@ -45,6 +45,9 @@ int main()
         //    player_posy += 10.0f;
         //}
 
+        
+
+
 
         //random stuff need to chuck this under a timer based system. dont forget pause needs to pause timer.
         int spawn_number = (rand() % 1); // either 1 or 2 falling objects
@@ -54,14 +57,29 @@ int main()
             if (spawn_location < 3)
             {
                 //spawn left (30%)
+                // Spawn obstacles at random intervals
+                if (rand() % 100 < 10) { // 10% chance of spawning an obstacle
+                    Obstacle newObstacle(spawn_location, 0, 100, 100, 0, 2); // create a new obstacle
+                    obstacles.push_back(newObstacle); // add to list
+                }
             }
             if (spawn_location > 6)
             {
-                //spawn right (30%)
+                //spawn left (30%)
+                // Spawn obstacles at random intervals
+                if (rand() % 100 < 10) { // 10% chance of spawning an obstacle
+                    Obstacle newObstacle(spawn_location, 0, 100, 100, 0, 2); // create a new obstacle
+                    obstacles.push_back(newObstacle); // add to list
+                }                //spawn right (30%)
             }
             else
             {
-                // spawn mid (40%)
+                //spawn left (30%)
+                // Spawn obstacles at random intervals
+                if (rand() % 100 < 10) { // 10% chance of spawning an obstacle
+                    Obstacle newObstacle(spawn_location, 0, 100, 100, 0, 2); // create a new obstacle
+                    obstacles.push_back(newObstacle); // add to list
+                }               // spawn mid (40%)
             }
         }
                 
@@ -69,8 +87,11 @@ int main()
         //redrawing the bitmap after every clear background and bee
         draw_bitmap(background, 0 , 0 , option_to_screen());
         draw_bitmap(bee, player.get_x(), player.get_y(), option_to_screen());
-        boxObstacle.update(); // update obstacle position
-        boxObstacle.draw();
+        // Update and draw obstacles
+        for (Obstacle& obstacle : obstacles) {
+            obstacle.update();
+            obstacle.draw();
+        }
         refresh_screen(60);
     }
 }
