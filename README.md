@@ -79,10 +79,51 @@ while (gameRunning) {
 	+ Observer pattern implementation
 	+ Registers with Subjects (Player and Obstacles)
 	+ `update()` method:
-		- Checks for collisions between Player and Obstacles
-		- Uses rectangle-rectangle collision detection algorithm
+		- Calls `checkCollisions()` to detect collisions
 		- Notifies Game State to update accordingly (e.g., displays collision text)
 
+```c
+class CollisionSystem {
+public:
+    void update() {
+        // Check for collisions
+        if (checkCollisions()) {
+            // Notify Game State to update accordingly
+            notifyGameState();
+        }
+    }
+
+private:
+    bool checkCollisions() {
+        // Check for collisions between Player and Obstacles
+        for (Obstacle obstacle : obstacles) {
+            if (player.x < obstacle.x + obstacle.width &&
+                player.x + player.width > obstacle.x &&
+                player.y < obstacle.y + obstacle.height &&
+                player.y + player.height > obstacle.y) {
+                return true;
+            }
+        }
+
+        // Check for collisions between Player and Collectibles
+        for (Collectible collectible : collectibles) {
+            if (player.x < collectible.x + collectible.width &&
+                player.x + player.width > collectible.x &&
+                player.y < collectible.y + collectible.height &&
+                player.y + player.height > collectible.y) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    void notifyGameState() {
+        // Display collision text
+        displayCollisionText();
+    }
+};
+```
 ### Collectibles
 
 * Manages collectible item spawning and collection
