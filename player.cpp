@@ -7,15 +7,15 @@ Player::Player(float x, float y, float speed) {
 }
 
 void Player::move_right() {
-    if (x <= 880) {
-        x += speed;
-    }
+    
+    x += speed;
+    
 }
 
 void Player::move_left() {
-    if (x >= 140) {
-        x -= speed;
-    }
+    
+    x -= speed;
+    
 }
 
 float Player::get_x() {

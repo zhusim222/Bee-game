@@ -11,7 +11,8 @@ bitmap bee = bitmap_named("images/Bee.png");
 bitmap box = bitmap_named("images/box.png");
 float player_posx = 480.0f;
 float player_posy = 550.0f;
-
+int RIGHT_BOUNDARY = 880;
+int LEFT_BOUNDARY = 140;
 
 int main()
 {
@@ -27,10 +28,10 @@ int main()
         process_events();
         clear_screen();
         
-        if (key_down(RIGHT_KEY)) {
+         if (key_down(RIGHT_KEY) && player.get_x() <= RIGHT_BOUNDARY) {
             player.move_right();
         }
-        if (key_down(LEFT_KEY)) {
+        if (key_down(LEFT_KEY) && player.get_x() >= LEFT_BOUNDARY) {
             player.move_left();
         }
        
@@ -50,7 +51,7 @@ int main()
 
 
         //random stuff need to chuck this under a timer based system. dont forget pause needs to pause timer.
-        int spawn_number = (rand() % 1); // either 1 or 2 falling objects
+        int spawn_number = (rand() % 2); // either 1 or 2 falling objects
         for (int i = 0; i <= spawn_number; i++)
         {
             int spawn_location = (rand() % 10);
