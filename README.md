@@ -54,7 +54,7 @@ while (gameRunning) {
     // Cap frame rate
     delay(16); // 60 FPS
 }
-
+```
 ### Game State
 
 * Manages the current status of the game
