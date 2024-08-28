@@ -1,41 +1,23 @@
+// Player.h
 #ifndef PLAYER_H
 #define PLAYER_H
 
-class Player { // Add the class keyword here
+#include "Observer.h"
+ #include "obstacle.h"
+class Player : public Observer {
 public:
-    /**
-     * Constructor for Player class.
-     * @param x Initial x position.
-     * @param y Initial y position.
-     * @param speed Player movement speed.
-     */
     Player(float x, float y, float speed);
-
-    /**
-     * Move player right.
-     */
     void move_right();
-
-    /**
-     * Move player left.
-     */
     void move_left();
-
-    /**
-     * Get player x position.
-     * @return x position.
-     */
-    float get_x();
-
-    /**
-     * Get player y position.
-     * @return y position.
-     */
-    float get_y();
+    float get_x() { return x; }
+    float get_y() { return y; }
+    float get_width() { return width; }
+    float get_height() { return height; }
+    float get_speed() { return speed; }
+    void onCollision(Obstacle& obstacle);
 
 private:
-    float x, y; // player position
-    float speed; // player movement speed
+    float x, y, speed, width, height;
 };
 
 #endif  // PLAYER_H
