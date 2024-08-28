@@ -59,7 +59,7 @@ int main()
         {
             spawn_timer = 0;
             int spawn_x = rand() % RIGHT_BOUNDARY; // Random x-coordinate between 0 and RIGHT_BOUNDARY
-            Obstacle newObstacle(spawn_x, 0,2);
+            Obstacle newObstacle(spawn_x, 0);
             obstacles.push_back(newObstacle);
             newObstacle.attach(&player); // Attach player observer to new obstacle
         }
