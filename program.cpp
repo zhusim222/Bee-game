@@ -11,8 +11,8 @@ bitmap bee = bitmap_named("images/Bee.png");
 bitmap box = bitmap_named("images/box.png");
 float player_posx = 480.0f;
 float player_posy = 550.0f;
-int RIGHT_BOUNDARY = 880;
-int LEFT_BOUNDARY = 140;
+int RIGHT_BOUNDARY = 1020;
+int LEFT_BOUNDARY = 0;
 
 int main()
 {
@@ -22,6 +22,10 @@ int main()
     Obstacle boxObstacle(640, 0, 100, 100, 0, 2); // x, y, width, height, type, speed
     
     std::vector<Obstacle> obstacles; // list of obstacle
+
+    // Spawn obstacles at a rate of 1 per second
+    int spawn_interval = 60; // 60 frames per second
+    int spawn_timer = 0;
 
     while (!quit_requested())
     {
@@ -34,54 +38,16 @@ int main()
         if (key_down(LEFT_KEY) && player.get_x() >= LEFT_BOUNDARY) {
             player.move_left();
         }
-       
-        
-        // remove comment if UP and DOWN is needed to be added
-        //if (key_down(UP_KEY))
-        //{
-        //    player_posy -= 10.0f;
-        //}
-        //if (key_down(DOWN_KEY))
-        //{
-        //    player_posy += 10.0f;
-        //}
-
         
 
-
-
-        //random stuff need to chuck this under a timer based system. dont forget pause needs to pause timer.
-        int spawn_number = (rand() % 2); // either 1 or 2 falling objects
-        for (int i = 0; i <= spawn_number; i++)
+        // Spawn obstacle at a random x-coordinate
+        spawn_timer++;
+        if (spawn_timer >= spawn_interval)
         {
-            int spawn_location = (rand() % 10);
-            if (spawn_location < 3)
-            {
-                //spawn left (30%)
-                // Spawn obstacles at random intervals
-                if (rand() % 100 < 10) { // 10% chance of spawning an obstacle
-                    Obstacle newObstacle(spawn_location, 0, 100, 100, 0, 2); // create a new obstacle
-                    obstacles.push_back(newObstacle); // add to list
-                }
-            }
-            if (spawn_location > 6)
-            {
-                //spawn left (30%)
-                // Spawn obstacles at random intervals
-                if (rand() % 100 < 10) { // 10% chance of spawning an obstacle
-                    Obstacle newObstacle(spawn_location, 0, 100, 100, 0, 2); // create a new obstacle
-                    obstacles.push_back(newObstacle); // add to list
-                }                //spawn right (30%)
-            }
-            else
-            {
-                //spawn left (30%)
-                // Spawn obstacles at random intervals
-                if (rand() % 100 < 10) { // 10% chance of spawning an obstacle
-                    Obstacle newObstacle(spawn_location, 0, 100, 100, 0, 2); // create a new obstacle
-                    obstacles.push_back(newObstacle); // add to list
-                }               // spawn mid (40%)
-            }
+            spawn_timer = 0;
+            int spawn_x = rand() % RIGHT_BOUNDARY; // Random x-coordinate between 0 and RIGHT_BOUNDARY
+            Obstacle newObstacle(spawn_x, 0, 100, 100, 0, 2);
+            obstacles.push_back(newObstacle);
         }
                 
 
