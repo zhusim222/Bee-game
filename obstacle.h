@@ -8,7 +8,7 @@
 
 class Obstacle : public Subject {
 public:
-    Obstacle(float x, float y,int speed);
+    Obstacle(float x, float y);
     float get_x() { return x; }
     float get_y() { return y; }
     float get_width() { return width; }
@@ -21,7 +21,7 @@ public:
     
 
 private:
-    float x, y, width, height, speed;
+    float x, y, width, height;
     std::vector<Observer*> observers;
 };
 

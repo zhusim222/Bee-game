@@ -3,16 +3,15 @@
 #include "splashkit.h"
 #include <algorithm>
 
-Obstacle::Obstacle(float x, float y,int speed){
+Obstacle::Obstacle(float x, float y){
     this->x = x;
     this->y = y;
-    this->speed = speed;
     this->width = bitmap_width(box);
     this->height = bitmap_height(box);
 }
 
 void Obstacle::update(){
-    this->y = this->y + this->speed;
+    this->y = this->y + GRAVITY;
 }
 
 void Obstacle::draw() {
