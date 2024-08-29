@@ -1,35 +1,26 @@
 // import
 #include "splashkit.h"
 #include "globals.h" // <- added this import
-#include <graphics.h>
+//#include <graphics.h>
 #include <cstdlib>
-
-
+#include "player.h"
 
 int main()
 {
     open_window("BeeFall", 1280, 960); //named window beefall and window size
     hide_mouse(); // hide mouse while cursor is over game window
+    Player player(480.0f, 550.0f, 10.0f); // initialize player
+
     while (!quit_requested())
     {
         process_events();
         clear_screen();
         
-        if (key_down(RIGHT_KEY))
-        {
-            if (player_posx <= 880)
-            {
-                player_posx += 10.0f;
-            }
+        if (key_down(RIGHT_KEY)) {
+            player.move_right();
         }
-        if (key_down(LEFT_KEY))
-        {
-            if (player_posx >= 140)
-            {
-                player_posx -= 10.0f;
-                
-                
-            }
+        if (key_down(LEFT_KEY)) {
+            player.move_left();
         }
 
         
@@ -66,7 +57,7 @@ int main()
 
         //redrawing the bitmap after every clear background and bee
         draw_bitmap(background, 0 , 0 , option_to_screen());
-        draw_bitmap(Player, player_posx , player_posy , option_to_screen());
+        draw_bitmap(bee, player.get_x(), player.get_y(), option_to_screen());
         refresh_screen(60);
     }
 }
