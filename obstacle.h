@@ -1,61 +1,28 @@
+// Obstacle.h
 #ifndef OBSTACLE_H
 #define OBSTACLE_H
 
-/**
- * Represents an obstacle in the game, such as a box.
- */
-class Obstacle {
+#include "Subject.h"
+#include <vector>
+#include "Observer.h"
+
+class Obstacle : public Subject {
 public:
-    /**
-     * x position of the obstacle.
-     */
-    float x;
-
-    /**
-     * y position of the obstacle.
-     */
-    float y;
-
-    /**
-     * Width of the obstacle.
-     */
-    float width;
-
-    /**
-     * Height of the obstacle.
-     */
-    float height;
-
-    /**
-     * Type of obstacle (e.g., bee, butterfly).
-     */
-    int type;
-
-    /**
-     * Speed of the obstacle.
-     */
-    float speed;
-
-    /**
-     * Constructor for Obstacle class.
-     * param x Initial x position.
-     * param y Initial y position.
-     * param width Initial width.
-     * param height Initial height.
-     * param type Initial type.
-     * param speed Initial speed.
-     */
-    Obstacle(float x, float y, float width, float height, int type, float speed);
-
-    /**
-     * Updates the obstacle's position based on its speed.
-     */
+    Obstacle(float x, float y,int speed);
+    float get_x() { return x; }
+    float get_y() { return y; }
+    float get_width() { return width; }
+    float get_height() { return height; }
     void update();
-
-    /**
-     * Draws the obstacle on the screen.
-     */
     void draw();
+    void attach(class Observer* observer) ;
+    void detach(class Observer* observer) ;
+    void notify(class Obstacle& obstacle) ;
+    
+
+private:
+    float x, y, width, height, speed;
+    std::vector<Observer*> observers;
 };
 
 #endif  // OBSTACLE_H
