@@ -9,6 +9,7 @@ Obstacle::Obstacle(float x, float y,int speed){
     this->speed = speed;
     this->width = bitmap_width(box);
     this->height = bitmap_height(box);
+    this->collision = false;
 }
 
 void Obstacle::update(){
@@ -29,4 +30,6 @@ void Obstacle::detach(Observer* observer) {
 
 void Obstacle::notify(Observer* observer) {
     observer->onCollision(*this); // Call onCollision on the observer, passing this obstacle
+    this->collision = true;
 }
+

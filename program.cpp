@@ -76,8 +76,15 @@ int main()
             // Check for collision with player
             if (check_collision(player.get_x(), player.get_y(), player.get_width(), player.get_height(),
                     obstacle.get_x(), obstacle.get_y(), obstacle.get_width(), obstacle.get_height())) {
-                    obstacle.notify(&player); // Notify player observer of collision
-                    //std::cout << "Bee touched the box!" << std::endl;
+                if (!obstacle.get_collision()) { // Collision started
+                    obstacle.notify(&player);
+                }
+            } else {
+                if (obstacle.get_collision()) { // Collision ended
+                    obstacle.set_collision(false);
+                    // Optional: trigger a notification or state change when the collision ends
+                    std::cout<<"collision ends"<<std::endl;
+                }
             }
             // // Remove obstacle if it's off the screen
             // if (obstacle.get_y() > screen_height()) {

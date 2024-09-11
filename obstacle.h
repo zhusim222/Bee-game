@@ -13,6 +13,8 @@ public:
     float get_y() { return y; }
     float get_width() { return width; }
     float get_height() { return height; }
+    bool get_collision(){return collision;}
+    void set_collision(bool is_col){this->collision = is_col;}
     void update();
     void draw();
     void attach(class Observer* observer) ;
@@ -22,6 +24,7 @@ public:
 
 private:
     float x, y, width, height, speed;
+    bool collision;
     std::vector<Observer*> observers;
 };
 
