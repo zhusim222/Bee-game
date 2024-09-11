@@ -17,7 +17,7 @@ public:
     void draw();
     void attach(class Observer* observer) ;
     void detach(class Observer* observer) ;
-    void notify(class Obstacle& obstacle) ;
+    void notify(class Observer* observer) ;
     
 
 private:
