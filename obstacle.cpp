@@ -27,8 +27,6 @@ void Obstacle::detach(Observer* observer) {
     observers.erase(std::remove(observers.begin(), observers.end(), observer), observers.end());
 }
 
-void Obstacle::notify(Obstacle& obstacle) {
-    for (Observer* observer : observers) {
-        observer->onCollision(obstacle);
-    }
+void Obstacle::notify(Observer* observer) {
+    observer->onCollision(*this); // Call onCollision on the observer, passing this obstacle
 }
