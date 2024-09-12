@@ -19,13 +19,40 @@ int RIGHT_BOUNDARY = 1020;
 int LEFT_BOUNDARY = 0;
 int GRAVITY = 3;
 
-bool check_collision(float x1, float y1, float width1, float height1,
-                     float x2, float y2, float width2, float height2) {
-    // Check if rectangles are colliding
-    return (x1 < x2 + width2 &&
-            x1 + width1 > x2 &&
-            y1 < y2 + height2 &&
-            y1 + height1 > y2);
+template <typename T, typename U>
+bool is_colliding(T& obj1, U& obj2) {
+    float x1 = obj1.get_x();
+    float y1 = obj1.get_y();
+    float w1 = obj1.get_width();
+    float h1 = obj1.get_height();
+
+    float x2 = obj2.get_x();
+    float y2 = obj2.get_y();
+    float w2 = obj2.get_width();
+    float h2 = obj2.get_height();
+
+    // Check for collision
+    return (x1 < x2 + w2 &&
+            x1 + w1 > x2 &&
+            y1 < y2 + h2 &&
+            y1 + h1 > y2);
+}
+
+// Function to handle collision between two objects
+template <typename T, typename U>
+void handle_collision(T& obj1, U& obj2) {
+    if (is_colliding(obj1, obj2)) {
+        if (!obj2.get_collision()) { // Collision started
+            obj2.notify(&obj1);
+            obj2.set_collision(true);
+        }
+    } else {
+        if (obj2.get_collision()) { // Collision ended
+            obj2.set_collision(false);
+            // Optional: trigger a notification or state change when the collision ends
+            std::cout << "collision ends" << std::endl;
+        }
+    }
 }
 
 
@@ -73,26 +100,7 @@ int main()
         for (Obstacle& obstacle : obstacles) {
             obstacle.update();
             obstacle.draw();
-            // Check for collision with player
-            if (check_collision(player.get_x(), player.get_y(), player.get_width(), player.get_height(),
-                    obstacle.get_x(), obstacle.get_y(), obstacle.get_width(), obstacle.get_height())) {
-                if (!obstacle.get_collision()) { // Collision started
-                    obstacle.notify(&player);
-                }
-            } else {
-                if (obstacle.get_collision()) { // Collision ended
-                    obstacle.set_collision(false);
-                    // Optional: trigger a notification or state change when the collision ends
-                    std::cout<<"collision ends"<<std::endl;
-                }
-            }
-            // // Remove obstacle if it's off the screen
-            // if (obstacle.get_y() > screen_height()) {
-            //     auto it = std::find(obstacles.begin(), obstacles.end(), obstacle);
-            //     if (it != obstacles.end()) {
-            //         obstacles.erase(it);
-            //     }
-            // }
+            handle_collision(player, obstacle);
         }
         refresh_screen(60);
     }
